@@ -33,7 +33,7 @@
                 <tr>
                     <th style="width: 10px">#</th>
                     <th>Name</th>
-                    <th>Action</th>
+                    <th class="w-50">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -42,7 +42,11 @@
                     <tr>
                         <td>@item.Id</td>
                         <td>@item.Name</td>
-                        <td><a asp-controller="Categories" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a></td>
+                        <td>
+                            <a asp-controller="Categories" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
+                            <a asp-controller="Categories" asp-action="Details" asp-route-id="@item.Id" class="btn btn-success"><i class="fas fa-info-circle"></i> Details</a>
+                            <a asp-controller="Categories" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</a>
+                        </td>
                     </tr>
                 }
             </tbody>
