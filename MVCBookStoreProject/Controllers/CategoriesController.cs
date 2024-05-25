@@ -43,5 +43,27 @@ namespace MVCBookStoreProject.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public IActionResult Edit()
+        {
+            return View("Create");
+        }
+
+        [HttpPost]
+        public IActionResult Edit(CategoryVM categoryVM)
+        {
+            var category = context.Categories.Find(categoryVM.Id);
+
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            category.Name = categoryVM.Name;
+            context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
     }
 }

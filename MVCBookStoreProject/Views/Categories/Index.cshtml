@@ -33,14 +33,16 @@
                 <tr>
                     <th style="width: 10px">#</th>
                     <th>Name</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
+                @foreach (var item in @Model)
                 {
                     <tr>
-                        <td>item.Id</td>
-                        <td>item.Name</td>
+                        <td>@item.Id</td>
+                        <td>@item.Name</td>
+                        <td><a asp-controller="Categories" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a></td>
                     </tr>
                 }
             </tbody>
