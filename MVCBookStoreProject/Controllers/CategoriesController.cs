@@ -116,7 +116,7 @@ namespace MVCBookStoreProject.Controllers
             context.Categories.Remove(category);
             context.SaveChanges();
 
-            return RedirectToAction("Index");
+            return Ok();
         }
     }
 }

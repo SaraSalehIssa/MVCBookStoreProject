@@ -12,6 +12,51 @@
     <a class="btn btn-primary" asp-controller="Categories" asp-action="Create">Create</a>
 }
 
+@section Scripts {
+    <script>
+        document.querySelectorAll(".js-delete").forEach((btn) => { 
+            btn.addEventListener("click", async () => {
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, delete it!"
+                }).then(async(result) => {
+                    if (result.isConfirmed) {
+                        const id = btn.dataset.id;
+
+                        const respone = await fetch(`/Categories/Delete/${id}`, {
+                            method: 'POST'
+                        });
+
+                        if (respone.ok) {
+                            btn.closest("tr").remove();
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                            Toast.fire({
+                                icon: "success",
+                                title: "Category Deleted!"
+                            });
+                        }
+                    }
+                });
+            })
+        })
+    </script>
+}
+
 @if (!Model.Any())
 {
     <div class="card-body">
@@ -45,7 +90,7 @@
                         <td>
                             <a asp-controller="Categories" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
                             <a asp-controller="Categories" asp-action="Details" asp-route-id="@item.Id" class="btn btn-success"><i class="fas fa-info-circle"></i> Details</a>
-                            <a asp-controller="Categories" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</a>
+                            <a href="#" data-id="@item.Id" class="btn btn-danger js-delete"><i class="fas fa-trash-alt"></i> Delete</a>
                         </td>
                     </tr>
                 }
