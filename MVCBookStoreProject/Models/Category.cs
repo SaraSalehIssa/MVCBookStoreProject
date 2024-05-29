@@ -1,7 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace MVCBookStoreProject.Models
 {
+    [Index(nameof(Name), IsUnique = true)] // To make Name column have unique values
     public class Category
     {
         public int Id { get; set; }

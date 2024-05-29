@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Humanizer;
+using Microsoft.AspNetCore.Mvc;
 using MVCBookStoreProject.Data;
 using MVCBookStoreProject.Models;
 using MVCBookStoreProject.ViewModel;
@@ -38,10 +39,19 @@ namespace MVCBookStoreProject.Controllers
                 Name = categoryVM.Name
             };
 
-            context.Categories.Add(category);
-            context.SaveChanges();
+            try
+            {
+                context.Categories.Add(category);
+                context.SaveChanges();
 
-            return RedirectToAction("Index");
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                ModelState.AddModelError("Name", "Sorry, Category name already exist!");
+                return View(categoryVM);
+            }
+
         }
 
         [HttpGet]
@@ -117,6 +127,13 @@ namespace MVCBookStoreProject.Controllers
             context.SaveChanges();
 
             return Ok();
+        }
+
+        public IActionResult CheckName(CategoryVM categoryVM)
+        {
+            // To check if Name value is unique or not
+            var isExist = context.Categories.Any(category => category.Name == categoryVM.Name);
+            return Json(!isExist);
         }
     }
 }
