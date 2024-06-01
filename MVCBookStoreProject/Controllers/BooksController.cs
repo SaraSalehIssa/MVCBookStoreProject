@@ -9,10 +9,12 @@ namespace MVCBookStoreProject.Controllers
     public class BooksController : Controller
     {
         public ApplicationDbContext context;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
-        public BooksController(ApplicationDbContext context)
+        public BooksController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
         {
             this.context = context;
+            this.webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index()
@@ -64,12 +66,24 @@ namespace MVCBookStoreProject.Controllers
                 return View(bookVM);
             }
 
+            string ImageName = null;
+            if (bookVM.ImgUrl != null)
+            {
+                ImageName = Path.GetFileName(bookVM.ImgUrl.FileName);
+
+                var path = Path.Combine($"{webHostEnvironment.WebRootPath}/img/Books", ImageName);
+
+                var stream = System.IO.File.Create(path);
+                bookVM.ImgUrl.CopyTo(stream);
+            }
+
             var book = new Book {
                 Title = bookVM.Title,
                 Description = bookVM.Description,
                 AuthorId = bookVM.AuthorId,
                 Publisher = bookVM.Publisher,
                 PublishDate = bookVM.PublishDate,
+                ImgUrl = ImageName,
                 Categories = bookVM.SelectedCategories.Select(id => new BookCategory
                 {
                     CategoryId = id
