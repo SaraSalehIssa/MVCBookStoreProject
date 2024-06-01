@@ -15,7 +15,7 @@ namespace MVCBookStoreProject.ViewModel
 
         [Display(Name = "Author")]
         public int AuthorId { get; set; }
-        public List<SelectListItem> Authors { get; set; }
+        public List<SelectListItem>? Authors { get; set; }
 
         public string Publisher { get; set; } = null!;
 
@@ -26,6 +26,6 @@ namespace MVCBookStoreProject.ViewModel
         public IFormFile? ImgUrl { get; set; }
 
         public List<int> SelectedCategories { get; set; } = new List<int>();
-        public List<SelectListItem> Categories { get; set; }
+        public List<SelectListItem>? Categories { get; set; }
     }
 }

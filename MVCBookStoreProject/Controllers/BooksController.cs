@@ -20,6 +20,7 @@ namespace MVCBookStoreProject.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult Create()
         {
             var authors = context.Authors.OrderBy(author => author.Name).ToList();
@@ -53,6 +54,31 @@ namespace MVCBookStoreProject.Controllers
             };
 
             return View(bookVM);
+        }
+
+        [HttpPost]
+        public IActionResult Create(BookFormVM bookVM)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(bookVM);
+            }
+
+            var book = new Book {
+                Title = bookVM.Title,
+                Description = bookVM.Description,
+                AuthorId = bookVM.AuthorId,
+                Publisher = bookVM.Publisher,
+                PublishDate = bookVM.PublishDate,
+                Categories = bookVM.SelectedCategories.Select(id => new BookCategory
+                {
+                    CategoryId = id
+                }).ToList()
+            };
+            context.Books.Add(book);
+            context.SaveChanges();
+
+            return RedirectToAction("Index");
         }
     }
 }

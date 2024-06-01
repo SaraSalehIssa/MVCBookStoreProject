@@ -9,7 +9,8 @@
     Create
 }
 
-<form asp-controller="Books">
+<!-- Because using file: enctype="multipart/form-data" -->
+<form asp-controller="Books" aps-action="Create" enctype="multipart/form-data">
     <div class="card-body">
         <div class="mb-3">
             <label asp-for="Title" class="form-label"></label>
@@ -43,7 +44,7 @@
 
         <div class="mb-3">
             <label asp-for="Description" class="form-label"></label>
-            <input type="text" class="form-control" asp-for="Description">
+            <textarea class="form-control" asp-for="Description"></textarea>
             <span asp-validation-for="Description" class="text-danger"></span>
         </div>
 
