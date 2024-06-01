@@ -1,0 +1,59 @@
+﻿@using MVCBookStoreProject.ViewModel
+@model BookFormVM
+
+@section Title {
+    Books
+}
+
+@section SubTitle {
+    Create
+}
+
+<form asp-controller="Books">
+    <div class="card-body">
+        <div class="mb-3">
+            <label asp-for="Title" class="form-label"></label>
+            <input type="text" class="form-control" asp-for="Title">
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="AuthorId" class="form-label"></label>
+            <select asp-for="AuthorId" asp-items="@Model.Authors" class="form-control"></select>
+            <span asp-validation-for="AuthorId" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Publisher" class="form-label"></label>
+            <input type="text" class="form-control" asp-for="Publisher">
+            <span asp-validation-for="Publisher" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="PublishDate" class="form-label"></label>
+            <input type="date" class="form-control" asp-for="PublishDate">
+            <span asp-validation-for="PublishDate" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="ImgUrl" class="form-label"></label>
+            <input type="file" class="form-control" asp-for="ImgUrl">
+            <span asp-validation-for="ImgUrl" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label"></label>
+            <input type="text" class="form-control" asp-for="Description">
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="SelectedCategories" class="form-label"></label>
+            <select asp-for="SelectedCategories" asp-items="@Model.Categories" class="form-control"></select>
+            <span asp-validation-for="SelectedCategories" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="card-footer">
+        <button type="submit" class="btn btn-primary">Add</button>
+    </div>
+</form>

@@ -15,6 +15,8 @@ namespace MVCBookStoreProject.Models
 
         public DateTime UpdatedOn { get; set; } = DateTime.Now;
 
+        public List<BookCategory> Books { get; set; } = new List<BookCategory>();
+
         /*
         Category () {
             CreatedOn = DateTime.Now;
