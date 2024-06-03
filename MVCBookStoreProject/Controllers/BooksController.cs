@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using MVCBookStoreProject.Data;
 using MVCBookStoreProject.Models;
 using MVCBookStoreProject.ViewModel;
@@ -19,6 +20,35 @@ namespace MVCBookStoreProject.Controllers
 
         public IActionResult Index()
         {
+            var books = context.Books.
+                Include(book => book.Author).
+                Include(book => book.Categories).
+                ThenInclude(book => book.Category).
+                ToList();
+
+            var bookVMs = new List<BookVM>();
+
+            foreach (var book in books)
+            {
+                var bookVM = new BookVM
+                {
+                    Id = book.Id,
+                    Title = book.Title,
+                    Author = book.Author.Name,
+                    PublishDate = book.PublishDate,
+                    Publisher = book.Publisher,
+                    ImgUrl = book.ImgUrl,
+                    Categories = new List<string>(),
+                };
+
+                foreach (var b in book.Categories)
+                {
+                    bookVM.Categories.Add(b.Category.Name);
+                }
+
+                bookVMs.Add(bookVM);
+            }
+
             return View();
         }
 
