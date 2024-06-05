@@ -135,5 +135,27 @@ namespace MVCBookStoreProject.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public IActionResult Delete(int id)
+        {
+            var book = context.Books.Find(id);
+
+            if (book is null)
+            {
+                return NotFound();
+            }
+
+            // To Delete Book Image
+            var path = Path.Combine(webHostEnvironment.WebRootPath,"img/Books", book.ImgUrl);
+            if (System.IO.File.Exists(path)) // To Check If Book Image is Exist Or Not
+            {
+                System.IO.File.Delete(path);
+            }
+
+            context.Books.Remove(book);
+            context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
     }
 }
