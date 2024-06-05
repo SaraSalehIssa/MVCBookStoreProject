@@ -1,4 +1,7 @@
-﻿@section Title {
+﻿@using MVCBookStoreProject.ViewModel
+@model List<BookVM>
+
+@section Title {
     Books
 }
 
@@ -8,4 +11,58 @@
 
 @section Button {
     <a class="btn btn-primary" asp-controller="Books" asp-action="Create">Create</a>
+}
+
+
+@if (!Model.Any())
+{
+    <div class="card-body">
+        <tr>
+            <td colspan="2">
+                <div class="alert alert-warning alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h5><i class="icon fas fa-exclamation-triangle"></i> Alert!</h5>
+                    No data found !!!
+                </div>
+            </td>
+        </tr>
+    </div>
+}
+else
+{
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th style="width: 10px">#</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Publisher</th>
+                    <th>Publish Date</th>
+                    <th>Image</th>
+                    <th>Categories</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in @Model)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Title</td>
+                        <td>@item.Author</td>
+                        <td>@item.Publisher</td>
+                        <td>@item.PublishDate</td>
+                        <td><img src="~/img/Books/@item.ImgUrl" alt="Book Image" width="50"/></td>
+                        <td>@string.Join(", ", @item.Categories)</td>
+                        <td>
+                            <a asp-controller="Categories" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
+                            <a asp-controller="Categories" asp-action="Details" asp-route-id="@item.Id" class="btn btn-success"><i class="fas fa-info-circle"></i> Details</a>
+                            <a href="#" data-id="@item.Id" class="btn btn-danger js-delete"><i class="fas fa-trash-alt"></i> Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }

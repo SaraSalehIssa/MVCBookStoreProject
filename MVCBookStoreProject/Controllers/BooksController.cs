@@ -49,7 +49,7 @@ namespace MVCBookStoreProject.Controllers
                 bookVMs.Add(bookVM);
             }
 
-            return View();
+            return View(bookVMs);
         }
 
         [HttpGet]
