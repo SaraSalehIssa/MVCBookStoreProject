@@ -20,12 +20,22 @@ namespace MVCBookStoreProject.Controllers
 
         public IActionResult Index()
         {
-            var books = context.Books.
+            var bookVMs = context.Books.
                 Include(book => book.Author).
                 Include(book => book.Categories).
                 ThenInclude(book => book.Category).
-                ToList();
+                ToList().Select(book => new BookVM
+            {
+                Id = book.Id,
+                Title = book.Title,
+                Author = book.Author.Name,
+                PublishDate = book.PublishDate,
+                Publisher = book.Publisher,
+                ImgUrl = book.ImgUrl,
+                Categories = book.Categories.Select(book => book.Category.Name).ToList(),
+            }).ToList();
 
+            /*
             var bookVMs = new List<BookVM>();
 
             foreach (var book in books)
@@ -48,6 +58,7 @@ namespace MVCBookStoreProject.Controllers
 
                 bookVMs.Add(bookVM);
             }
+            */
 
             return View(bookVMs);
         }
