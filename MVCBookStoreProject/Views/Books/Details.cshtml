@@ -1,0 +1,33 @@
+﻿@using MVCBookStoreProject.ViewModel
+@model BookFormVM
+
+@section Title {
+    Books
+}
+
+@section SubTitle {
+    Details
+}
+
+<div class="card-body">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th style="width: 10px">#</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Publisher</th>
+                <th>Publish Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Id</td>
+                <td>@Model.Title</td>
+                <td>@Model.Description</td>
+                <td>@Model.Publisher</td>
+                <td>@Model.PublishDate</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

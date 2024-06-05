@@ -136,6 +136,27 @@ namespace MVCBookStoreProject.Controllers
             return RedirectToAction("Index");
         }
 
+        public IActionResult Details(int id)
+        {
+            var book = context.Books.Find(id);
+
+            if (book == null)
+            {
+                return NotFound();
+            }
+
+            var bookViewModel = new BookFormVM
+            {
+                Id = book.Id,
+                Title = book.Title,
+                Description = book.Description,
+                Publisher = book.Publisher,
+                PublishDate = book.PublishDate,
+            };
+
+            return View(bookViewModel);
+        }
+
         public IActionResult Delete(int id)
         {
             var book = context.Books.Find(id);
